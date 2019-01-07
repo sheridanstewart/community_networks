@@ -1,6 +1,8 @@
 import pickle
 import sys
 from prettytable import PrettyTable
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
 try:
