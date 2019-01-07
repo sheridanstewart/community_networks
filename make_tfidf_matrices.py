@@ -17,6 +17,8 @@ for file in glob.glob("{}/*combined.txt".format(dir_)):
 
 cv = CountVectorizer()
 tdm = cv.fit_transform([content for file, content in corpus])
+
+user_counts = tdm.toarray().astype(bool).sum(axis=1)
 		
 tf_logged = TfidfVectorizer(analyzer="word", ngram_range=(1,1), stop_words=["[deleted]"], sublinear_tf=True)
 tfidf_matrix_logged = tf_logged.fit_transform([content for file, content in corpus])
@@ -24,7 +26,7 @@ tfidf_matrix_logged = tf_logged.fit_transform([content for file, content in corp
 tf_raw = TfidfVectorizer(analyzer="word", ngram_range=(1,1), stop_words=["[deleted]"], sublinear_tf=False)
 tfidf_matrix_logged = tf_raw.fit_transform([content for file, content in corpus])
 
-pickle.dump(tdm, open("tdm.p", "wb"))
+pickle.dump(user_counts, open("user_counts.p", "wb"))
 pickle.dump(tfidf_matrix_logged, open("tfidf_matrix_logged.p", "wb"))
 pickle.dump(tfidf_matrix_raw, open("tfidf_matrix_raw.p", "wb"))
 pickle.dump(subredditList, open("subredditlist.p", "wb"))
