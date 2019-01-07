@@ -3,7 +3,8 @@ import sys
 from prettytable import PrettyTable
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import linear_kernel
+from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.metrics.pairwise import linear_kernel
 
 try:
 	assert len(sys.argv) >= 4
@@ -30,14 +31,15 @@ assert len(subredditlist) == tf_idf_matrix_logged.shape[0]
 
 
 def find_similar(matrix, index, top_n):
-	#sims = linear_kernel(matrix[index:index+1], matrix).flatten() # relies on l2 norm
+	#sims = linear_kernel(matrix[index:index+1], matrix).flatten() # relies on l2 norm; import commented out
 	sims = cosine_similarity(matrix[index:index+1], matrix).flatten() # no normalization needed
 	related_docs_indices = [i for i in sims.argsort()[::-1] if i != index]
 	return [(index, sims[index]) for index in related_docs_indices][0:top_n]
 
 
 for subreddit in subreddits:
-	cols = ["Top {} Matches for {} with Raw TFs:".format(n, subreddit), "Cosine:", "Num. Unique Users:", "With Logged TFs:", "Cosine:", "Num. Unique Users:"]
+	cols = ["Top {} Matches for {} with Raw TFs:".format(n, subreddit), "Cosine:", "Num. Unique Users:"]
+	cols = cols + ["With Logged TFs:", "Cosine:", "Num. Unique Users:"]
 	matches_raw = []
 	scores_raw = []
 	counts_raw = []
