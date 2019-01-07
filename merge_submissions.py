@@ -2,7 +2,7 @@ import re
 import sys
 
 firstYear = int(sys.argv[1])
-lastYear = int(sys/argv[2])
+lastYear = int(sys.argv[2])
 firstMonth = int(sys.argv[3])
 lastMonth = int(sys.argv[4])
 
