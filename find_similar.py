@@ -20,19 +20,18 @@ if n >= len(subredditlist):
 	n = len(subredditlist) - 1
 	
 user_counts = pickle.load(open("user_counts.p", "rb"))
-
 assert len(subredditlist) == len(user_counts)
 
 tfidf_matrix_raw = pickle.load(open("tfidf_matrix_raw.p", "rb"))
-
 assert len(subredditlist) == tfidf_matrix_raw.shape[0]
 
 tfidf_matrix_logged = pickle.load(open("tfidf_matrix_logged.p", "rb"))
-
 assert len(subredditlist) == tf_idf_matrix_logged.shape[0]
 
+
 def find_similar(matrix, index, top_n):
-	sims = linear_kernel(matrix[index:index+1], matrix).fatten()
+	#sims = linear_kernel(matrix[index:index+1], matrix).flatten() # relies on l2 norm
+	sims = cosine_similarity(matrix[index:index+1], matrix).flatten() # no normalization needed
 	related_docs_indices = [i for i in sims.argsort()[::-1] if i != index]
 	return [(index, sims[index]) for index in related_docs_indices][0:top_n]
 
