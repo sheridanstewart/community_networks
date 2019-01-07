@@ -16,5 +16,8 @@ tfidf_matrix_logged = tf_logged.fit_transform([content for file, content in corp
 tf_raw = TfidfVectorizer(analyzer="word", ngram_range=(1,1), min_df=0, stop_words=["[deleted]"], sublinear_tf=False)
 tfidf_matrix_logged = tf_raw.fit_transform([content for file, content in corpus])
 
+fnames = [tup[0] for tup in corpus] # file names for subreddits
+
 pickle.dump(tfidf_matrix_logged, open("tfidf_matrix_logged.p", "wb"))
 pickle.dump(tfidf_matrix_raw, open("tfidf_matrix_raw.p", "wb"))
+pickle.dump(fnames, open("fnames.p", "wb"))
