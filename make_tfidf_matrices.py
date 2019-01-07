@@ -7,9 +7,15 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 corpus = []
 subredditList = []
 
+assert len(sys.argv) == 5
+assert sys.argv[4] in ["content", "users", "user"]
+
 dir_ = sys.argv[1]
 fnameFormatting = sys.argv[2]
 pickleFlag = sys.argv[3]
+content_or_users = sys.argv[4]
+if content_or_users == "user":
+	content_or_users = "users"
 
 for file in glob.glob("{}/*{}.txt".format(dir_, fnameFormatting)):
 	with open(file, "r") as reader:
@@ -35,7 +41,7 @@ tf_logged = TfidfVectorizer(norm=None, analyzer="word", ngram_range=(1,1), stop_
 tfidf_matrix_logged = tf_logged.fit_transform([content for file, content in corpus])
 assert len(subredditList) == tfidf_matrix_logged.shape[0]
 
-pickle.dump(subredditList, open("{}_subredditlist.p".format(pickleFlag), "wb"))
-pickle.dump(user_counts, open("{}_user_counts.p".format(pickleFlag), "wb"))
-pickle.dump(tfidf_matrix_raw, open("{}_tfidf_matrix_raw.p".format(pickleFlag), "wb"))
-pickle.dump(tfidf_matrix_logged, open("{}_tfidf_matrix_logged.p".format(pickleFlag), "wb"))
+pickle.dump(subredditList, open("{}_subredditlist_{}.p".format(pickleFlag, content_or_users), "wb"))
+pickle.dump(user_counts, open("{}_user_counts_{}.p".format(pickleFlag, content_or_users), "wb"))
+pickle.dump(tfidf_matrix_raw, open("{}_tfidf_matrix_raw_{}.p".format(pickleFlag, content_or_users), "wb"))
+pickle.dump(tfidf_matrix_logged, open("{}_tfidf_matrix_logged_{}.p".format(pickleFlag, content_or_users), "wb"))
