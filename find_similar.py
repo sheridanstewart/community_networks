@@ -38,8 +38,8 @@ def find_similar(matrix, index, top_n):
 
 
 for subreddit in subreddits:
-	cols = ["Top {} Matches for {} with Raw TFs:".format(n, subreddit), "Cosine:", "Num. Unique Users:"]
-	cols = cols + ["With Logged TFs:", "Cosine:", "Num. Unique Users:"]
+	cols = ["Top {} Matches for {} with Raw TFs:".format(n, subreddit), "Cosine:", "Users:"]
+	cols = cols + ["With Logged TFs:", "Cosine:", "Users:"]
 	matches_raw = []
 	scores_raw = []
 	counts_raw = []
