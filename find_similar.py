@@ -28,16 +28,24 @@ def find_similar(matrix, index, top_n):
 
 
 for subreddit in subreddits:
-	cols = ["Top {} Matches for {}:".format(n, subreddit), "With Raw TFs:", "Cosine:", "Num. Unique Users:", "With Logged TFs:", "Cosine:", "Num. Unique Users:"]
+	cols = ["Top {} Matches for {} with Raw TFs:", "Cosine:", "Num. Unique Users:", "With Logged TFs:", "Cosine:", "Num. Unique Users:"]
 	matches_raw = []
 	scores_raw = []
 	matches_logged = []
 	scores_logged = []
-	t = PrettyTable()
+	table = PrettyTable()
 	subreddit_index = subredditlist.index(subreddit)
 	for index, score in find_similar(tfidf_matrix_raw, subreddit_index, n):
-		matches_raw.append("{}".format(corpus[index][0]))
-		scores_raw.append("{}".format(corpus[index][0]))
+		matches_raw.append("{}".format(subredditlist[index]))
+		scores_raw.append("{:.2f}".format(score))
 	for index, score in find_similar(tfidf_matrix_logged, subreddit_index, n):
-		pass
-	
+		matches_logged.append("{}".format(subredditlist[index]))
+		scores_logged.append("{:.2f}".format(score))
+	table.add_column(cols[0], matches_raw)
+	table.add_column(cols[1], scores_raw)
+	table.add_column(cols[2], [])
+	table.add_column(cols[3], matches_logged)
+	table.add_column(cols[4], scores_logged)
+	table.add_column(cols[5], [])
+	print(table)
+	print("")
