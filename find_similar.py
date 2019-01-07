@@ -34,4 +34,10 @@ for subreddit in subreddits:
 	matches_logged = []
 	scores_logged = []
 	t = PrettyTable()
+	subreddit_index = subredditlist.index(subreddit)
+	for index, score in find_similar(tfidf_matrix_raw, subreddit_index, n):
+		matches_raw.append("{}".format(corpus[index][0]))
+		scores_raw.append("{}".format(corpus[index][0]))
+	for index, score in find_similar(tfidf_matrix_logged, subreddit_index, n):
+		pass
 	
