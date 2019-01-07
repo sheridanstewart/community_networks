@@ -1,7 +1,7 @@
 import glob
 import pickle
 import sys
-from sklearn.feature_extract.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
 corpus = []
