@@ -8,6 +8,8 @@ lastMonth = int(sys.argv[4])
 
 for year in range(firstYear, lastYear + 1):
 	for month in range(firstMonth, lastMonth + 1):
+		if month < 10:
+			month = "0{}".format(month)
 		with open("RS_{}-{}.tsv".format(year, month), "r") as reader:
 			for line in reader:
 				line = line.split("\t")
@@ -16,4 +18,4 @@ for year in range(firstYear, lastYear + 1):
 				submission = re.sub("\s+", " ", submission)
 				fname = "{}-{}-{}-{}-{}.txt".format(subreddit, firstYear, lastYear, firstMonth, lastMonth)
 				with open(fname, "a+") as writer:
-					writer.write(" {} ".format(submission)
+					writer.write(" {} ".format(submission))
