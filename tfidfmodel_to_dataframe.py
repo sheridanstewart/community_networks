@@ -1,4 +1,5 @@
-
+import matplotlib.pyplot as plt
+import networkx as nx
 import numpy as np
 import pandas as pd
 import pickle
@@ -19,3 +20,8 @@ index = Similarity(index_tmp, model, num_features=len(vocabulary))
 df = np.array(index)
 del index
 df = pd.DataFrame(df, index=subredditList, columns=subredditList)
+
+graph = nx.from_numpy_matrix(df.columns)
+graph = nx.relabel_nodes(graph, dict(enumerate(df.columns)))
+nx.draw(graph)
+plt.show()
