@@ -1,4 +1,3 @@
-
 import math
 import os
 import pickle
@@ -29,14 +28,18 @@ for f in os.listdir(readDir):
 pickle.dump(post_counts, open("post_counts.p", "wb"))
 pickle.dump(user_counts, open("user_counts.p", "wb"))
 
-post_counts = [(key, math.log(1 + post_counts[key])) for key, value in user_counts.keys()]
+post_counts = [(key, math.log(1 + post_counts[key])) for key in user_counts.keys()]
 post_counts.sort(key=lambda x: x[1])
 with open("logged_post_counts.txt", "a") as writer:
 	for tup in post_counts:
 		writer.write("{},\t{}\n".format(tup[0], tup[1]))
-				
-user_counts = [(key, math.log(1 + len(user_counts[key])) for key in user_counts.keys()]
-user_counts.sort(key=lambda x: x[1]
+
+user_counts = [(key, math.log(1 + len(user_counts[key]))) for key in user_counts.keys()]
+user_counts.sort(key=lambda x: x[1])
 with open("logged_user_counts.txt", "a") as writer:
 	for tup in user_counts:
 		writer.write("{},\t{}\n".format(tup[0], tup[1]))
+
+print(len(user_counts))
+print(len(post_counts))
+assert len(user_counts) == len(post_counts)
